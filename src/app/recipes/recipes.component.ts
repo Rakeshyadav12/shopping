@@ -1,6 +1,7 @@
 import { RecipeService } from './recipe.service';
 import { Recipe } from './recipe.model';
-import { Component, OnInit, Output } from '@angular/core';
+import { Component, OnDestroy, OnInit, Output } from '@angular/core';
+import { interval, Observable } from 'rxjs';
 
 @Component({
   selector: 'app-recipes',
@@ -8,9 +9,11 @@ import { Component, OnInit, Output } from '@angular/core';
   styleUrls: ['./recipes.component.css'],
   providers : [ RecipeService ]
 })
-export class RecipesComponent implements OnInit {
+export class RecipesComponent implements OnInit , OnDestroy {
 
   public selectedRecipe : Recipe;
+
+  public firstObs;
 
   constructor( private recipeService : RecipeService ) { }
 
@@ -21,6 +24,27 @@ export class RecipesComponent implements OnInit {
           this.selectedRecipe = recipe;
         }
       )
+
+    // const firstOne = interval(1000).subscribe( count => {
+    //   console.log(count);
+    // })
+
+    const customObservable = Observable.create( observer => {
+      let count = 0;
+      setInterval( () => {
+        observer.next(count);
+        count++;
+      } , 1000 );
+    })
+
+    this.firstObs = customObservable.subscribe( (data) => {
+      console.log(data);
+
+    })
+  }
+
+  ngOnDestroy(): void {
+    this.firstObs.unsubscribe();
   }
 
 }
