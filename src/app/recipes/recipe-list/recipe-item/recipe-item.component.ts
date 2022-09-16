@@ -2,7 +2,6 @@ import { RecipeService } from './../../recipe.service';
 import { Recipe } from './../../recipe.model';
 
 import { Component, Input, OnInit } from '@angular/core';
-import { InvokeMethodExpr } from '@angular/compiler';
 
 @Component({
   selector: 'app-recipe-item',
@@ -18,10 +17,6 @@ export class RecipeItemComponent implements OnInit {
 
   ngOnInit(): void {
 
-  }
-
-  onSelected = () => {
-    this.recipeService.recipeSelected.emit(this.recipe);
   }
 
 }
