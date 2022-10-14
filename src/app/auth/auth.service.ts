@@ -1,5 +1,5 @@
+import { environment } from './../../environments/environment.prod';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { ThrowStmt } from '@angular/compiler';
 import { Injectable } from "@angular/core";
 import { Router } from '@angular/router';
 import { throwError, BehaviorSubject } from 'rxjs';
@@ -28,7 +28,7 @@ export class AuthService {
   private tokenExpirationTimer : any ;
 
   signUp( email : string , password : string ) {
-    return this.http.post<AuthResponseData>("https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyBrgr_T4UOG370BtArOmAfLxNMp76cd21A", {
+    return this.http.post<AuthResponseData>("https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=" + environment.firebaseAPIKey, {
       email : email,
       password : password,
       returnSecureToken : true
@@ -45,7 +45,7 @@ export class AuthService {
   }
 
   logIn( email : string , password : string ) {
-    return this.http.post<AuthResponseData>("https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyBrgr_T4UOG370BtArOmAfLxNMp76cd21A", {
+    return this.http.post<AuthResponseData>("https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=" + environment.firebaseAPIKey , {
       email : email ,
       password : password ,
       returnSecureToken : true
